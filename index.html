@@ -30,9 +30,10 @@
             padding: 10px 10px 80px; 
             line-height: 1.6; 
             -webkit-print-color-adjust: exact; 
+            overflow-x: hidden; /* スマホでの横揺れ・はみ出しを完全に防止 */
         }
 
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; width: 100%; }
 
         /* --- 言語切り替えボタン (右上固定) --- */
         .top-right-lang {
@@ -85,22 +86,21 @@
         .intro-item { grid-column: span 1; }
         .schedule-item { grid-column: span 1; background-color: #f8f8fb; }
         .promises-item { grid-column: span 2; background-color: var(--promise-bg); border: 1px solid #ffeeba; }
-        .respect-future-item { grid-column: span 2; } 
         .schedule-img-item { grid-column: span 2; padding: 0; overflow: hidden; border: 1px solid #e5e5ea;} 
 
         /* --- タイポグラフィ --- */
         h1.title { 
             margin: 0; 
-            font-size: clamp(2rem, 10vw, 4.2em); 
+            font-size: clamp(2rem, 9vw, 4.2em); /* スマホ画面で縮小されるように調整 */
             font-weight: 800; 
             letter-spacing: -0.04em; 
-            line-height: 1.0; 
-            white-space: nowrap; 
+            line-height: 1.1; 
             font-family: 'Playfair Display', serif;
+            word-break: keep-all; /* 単語の途中で改行させない、はみ出しを防止 */
         } 
         
         .drop-cap {
-            font-size: 1.4em; 
+            font-size: 1.3em; 
             font-weight: 800;
             display: inline-block;
             vertical-align: middle;
@@ -111,14 +111,14 @@
         }
 
         .subtitle { font-size: 1.3em; font-weight: 600; opacity: 0.95; margin-top: 8px; font-family: 'Playfair Display', serif; }
-        .meta-info { font-size: 0.9rem; opacity: 0.95; margin-top: 20px; display: flex; gap: 20px; font-weight: 600; }
+        .meta-info { font-size: 0.9rem; opacity: 0.95; margin-top: 20px; display: flex; gap: 20px; font-weight: 600; flex-wrap: wrap; justify-content: center;}
 
         h2.bento-title { 
             font-size: 1.3em; margin: 0 0 15px 0; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text-main); 
             font-family: 'Playfair Display', serif;
         }
         
-        .deep-item h2.bento-title { color: #fff; justify-content: center; font-size: clamp(1.2rem, 6vw, 1.6em); margin-bottom: 20px; white-space: nowrap;}
+        .deep-item h2.bento-title { color: #fff; justify-content: center; font-size: clamp(1.2rem, 6vw, 1.6em); margin-bottom: 20px; text-align: center;}
         .schedule-img-item h2.bento-title { padding: 20px 25px; margin: 0; border-bottom: 1px solid #e5e5ea; justify-content: center;}
         .promises-item h2.bento-title { justify-content: center; font-size: 1.6em; margin-bottom: 20px;}
 
@@ -145,7 +145,7 @@
         /* --- 5つの約束 --- */
         .promises-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .promise-card { background: white; border-radius: 15px; padding: 18px; border: 1px solid #eee; display: flex; flex-direction: column; gap: 6px;}
-        .promise-header { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; color: #856404; font-family: 'Playfair Display', serif; }
+        .promise-header { display: flex; align-items: flex-start; gap: 10px; font-weight: 700; font-size: 1rem; color: #856404; font-family: 'Playfair Display', serif; line-height: 1.3;}
         .promise-icon { font-size: 1.3em; }
         .promise-reason { font-size: 0.85rem; color: #6c757d; font-weight: 400; line-height: 1.5; text-align: justify; font-family: 'Noto Sans JP', sans-serif;}
 
@@ -170,14 +170,18 @@
         /* --- スマホ用レイアウト最適化 --- */
         @media (max-width: 768px) {
             .bento-grid { grid-template-columns: 1fr; gap: var(--gap); }
-            .header-item, .deep-item, .schedule-img-item, .promises-item, .respect-future-item, .intro-item, .schedule-item { grid-column: span 1; padding: 20px; }
-            .header-item { padding: 30px 20px; }
+            /* 全セクションを1列に */
+            .header-item, .deep-item, .schedule-img-item, .promises-item, .intro-item, .schedule-item { grid-column: span 1; padding: 20px; }
+            .header-item { padding: 30px 15px; }
             .deep-item { padding: 25px 20px; }
             .schedule-img-item { padding: 0; }
-            .meta-info { flex-direction: column; gap: 4px; align-items: center; margin-top: 15px; font-size: 0.85rem;}
+            
+            /* 日付とWriterをスマホでは縦に並べる */
+            .meta-info { flex-direction: column; gap: 6px; align-items: center; margin-top: 15px; font-size: 0.85rem;}
             .promises-grid { grid-template-columns: 1fr; }
-            .promises-item h2.bento-title { font-size: 1.2em; white-space: nowrap; }
-            .deep-item .bento-text { font-size: 0.95rem; }
+            
+            /* スマホ時はPC用印刷ボタンを非表示にする */
+            .floating-nav { display: none !important; }
         }
 
         /* --- A4印刷最適化 --- */
@@ -192,7 +196,7 @@
             .deep-item { color: black; background-color: #f2f2f7; border: 1px solid #ccc; padding: 20px;}
             .deep-item h2.bento-title { color: black; }
             h1.title { font-size: 3em; }
-            .meta-info { font-size: 0.8rem; margin-top: 10px; }
+            .meta-info { font-size: 0.8rem; margin-top: 10px; flex-direction: row;}
             .stylish-text { font-size: 0.9rem; }
             .bento-text { font-size: 0.85rem; }
             .promise-reason { font-size: 0.8rem; }
@@ -205,8 +209,12 @@
     <div class="top-right-lang no-print">
         🌐 Language
         <select id="langSwitch" onchange="changeLanguage()">
-            <option value="ja">日本語</option><option value="en">English</option><option value="pt">Português</option>
-            <option value="tl">Tagalog</option><option value="ta">Tamil</option><option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="tl">Tagalog</option>
+            <option value="ta">Tamil</option>
+            <option value="zh">中文</option>
         </select>
     </div>
 
@@ -228,7 +236,7 @@
                 <h2 class="bento-title" id="sec2-title">🧠 「Deep Thinkers」に込めた想い</h2>
                 <p class="bento-text" id="sec2-text">
                     情報が氾濫し、AIが瞬時に答えを提示する現代において、真の価値を持つのは「思考すること」そのものです。<br>
-                    Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、皆さんが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。
+                    Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、みんなが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。
                 </p>
             </div>
 
@@ -237,19 +245,15 @@
                 <div class="profile-box">
                     <ul class="profile-list" id="profile-details">
                         <li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li>
-                        <li><strong>家族:</strong>妻、長女、双子の息子(安城モンキーズでサッカー奮闘中！)</li>
-                        <li><strong>教員歴:</strong>18年 (愛知県教育委員会等を経て今年から安城学園へ)</li>
-                        <li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語・ヒンディー語</li>
-                        <li><strong>Tech:</strong>Microsoft認定教員 / Python, ReactでのWebアプリ開発</li>
-                        <li><strong>趣味:</strong>ドローン撮影、動画編集(Filmora)、DIY、高校野球観戦</li>
-                        <li><strong>Game:</strong>バイオハザード、フォートナイト、テトリス</li>
-                        <li><strong>Anime:</strong>ドラゴンボール、クレヨンしんちゃん</li>
+                        <li><strong>教員歴:</strong>18年 (県立高校→愛知県教育委員会)</li>
+                        <li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語</li>
+                        <li><strong>資格:</strong>Microsoft認定教員</li>
+                        <li><strong>趣味:</strong>DIYやアプリ開発</li>
                     </ul>
                 </div>
                 <p class="stylish-text" id="sec1-text">
-                    皆さん、初めまして！この4月から安城学園にやってきた「ナカシー」です。昔、カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>
-                    また、私のもう一つの顔は「プログラマー」です！皆さんが楽しく学べるように、「TalkGatcha」や「PowerSlide」などの英語学習Webアプリや、メタバース空間まで自分でプログラミングして作っています。<br><br>
-                    3年2組の皆さんにも、英語を「テストの点数のため」ではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、あるいはゲームやアニメの話がしたいときでも、いつでも気軽に話しかけてくださいね。1年間、一緒に最高のクラスを創っていきましょう！
+                    みんな、初めまして！この4月から安城学園にやってきた「ナカシー」です。昔、カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>
+                    3年2組のみんなにも、英語を「テストの点数のため」ではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、いつでも気軽に話しかけてね。1年間、一緒に最高のクラスを創っていきましょう！
                 </p>
             </div>
 
@@ -300,13 +304,6 @@
                 </div>
             </div>
 
-            <div class="bento-item respect-future-item">
-                <h2 class="bento-title" id="sec3-title">🤝 Respect & Future</h2>
-                <p class="bento-text" id="sec3-text">
-                    違いを面白がり、他者をリスペクトできる柔軟な心を持ってください。また、進路実現は早期準備が鍵です。一人で抱え込まず、全力で走り抜けましょう！
-                </p>
-            </div>
-
             <div class="bento-item schedule-img-item">
                 <h2 class="bento-title" id="sec-schedule-title">📅 Weekly Class Schedule</h2>
                 <img src="image1.webp" alt="Weekly Class Schedule" class="schedule-img">
@@ -323,76 +320,124 @@
         const translations = {
             ja: {
                 title1: "👋 Homeroom Teacher",
-                profile: "<li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li><li><strong>家族:</strong>妻、長女、双子の息子(安城モンキーズでサッカー奮闘中！)</li><li><strong>教員歴:</strong>18年 (愛知県教育委員会等を経て今年から安城学園へ)</li><li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語・ヒンディー語</li><li><strong>Tech:</strong>Microsoft認定教員 / Python, ReactでのWebアプリ開発</li><li><strong>趣味:</strong>ドローン撮影、動画編集(Filmora)、DIY、高校野球観戦</li><li><strong>Game:</strong>バイオハザード、フォートナイト、テトリス</li><li><strong>Anime:</strong>ドラゴンボール、クレヨンしんちゃん</li>",
-                text1: "皆さん、初めまして！この4月から安城学園にやってきた「ナカシー」です。昔、カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>また、私のもう一つの顔は「プログラマー」です！皆さんが楽しく学べるように、「TalkGatcha」や「PowerSlide」などの英語学習Webアプリや、メタバース空間まで自分でプログラミングして作っています。<br><br>3年2組の皆さんにも、英語を「テストの点数のため」ではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、あるいはゲームやアニメの話がしたいときでも、いつでも気軽に話しかけてくださいね。1年間、一緒に最高のクラスを創っていきましょう！",
+                profile: `
+                    <li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li>
+                    <li><strong>教員歴:</strong>18年 (県立高校→愛知県教育委員会)</li>
+                    <li><strong>言語:</strong>日・英・スペイン・インドネシア・ネパール</li>
+                    <li><strong>資格:</strong>Microsoft認定教員</li>
+                    <li><strong>趣味:</strong>DIYやアプリ開発</li>
+                `,
+                text1: "みんな、初めまして！この4月から安城学園にやってきた「ナカシー」です。昔、カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>3年2組のみんなにも、英語を「テストの点数のため」ではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、いつでも気軽に話しかけてね。1年間、一緒に最高のクラスを創っていきましょう！",
                 schedule_title: "📅 Weekly Class Schedule",
                 prom_title: "✨ Class 3-2: Five Promises",
                 prom_list: `
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">⏰</span>時間を守り、提出物は期日厳守</div>
-                        <div class="promise-reason">社会的信頼の基礎であり、他者の時間を尊重する行為です。</div>
-                    </div>
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">🚀</span>常に挑戦し続ける人になる</div>
-                        <div class="promise-reason">現状維持は衰退を意味します。成長はコンフォートゾーンの外にあります。</div>
-                    </div>
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">🌐</span>言語を学ぶ意味を理解し卒業する</div>
-                        <div class="promise-reason">単なるスキルではなく、異なる視点を得て世界を多角的に捉えるためです。</div>
-                    </div>
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">🤝</span>誰に対しても敬意と丁寧な言葉を</div>
-                        <div class="promise-reason">円滑なコミュニケーションと良好な人間関係を築く土台となります。</div>
-                    </div>
-                    <div class="promise-card" style="grid-column: 1 / -1;">
-                        <div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>笑顔で自分と友達を救う</div>
-                        <div class="promise-reason" style="text-align: center;">笑顔は自身のストレスを軽減し、周囲に安心感を与える強力なツールです。</div>
-                    </div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">⏰</span>時間を守り、提出物は期日厳守</div><div class="promise-reason">社会的信頼の基礎であり、他者の時間を尊重する行為です。</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🚀</span>常に挑戦し続ける人になる</div><div class="promise-reason">現状維持は衰退を意味します。成長はコンフォートゾーンの外にあります。</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🌐</span>言語を学ぶ意味を理解し卒業する</div><div class="promise-reason">単なるスキルではなく、異なる視点を得て世界を多角的に捉えるためです。</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🤝</span>誰に対しても敬意と丁寧な言葉を</div><div class="promise-reason">円滑なコミュニケーションと良好な人間関係を築く土台となります。</div></div>
+                    <div class="promise-card" style="grid-column: 1 / -1;"><div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>笑顔で自分と友達を救う</div><div class="promise-reason" style="text-align: center;">笑顔は自身のストレスを軽減し、周囲に安心感を与える強力なツールです。</div></div>
                 `,
                 title2: "🧠 「Deep Thinkers」に込めた想い",
-                text2: "情報が氾濫し、AIが瞬時に答えを提示する現代において、真の価値を持つのは「思考すること」そのものです。<br>Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、皆さんが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。",
-                title3: "🤝 Respect & Future",
-                text3: "違いを面白がり、他者をリスペクトできる柔軟な心を持ってください。また、進路実現は早期準備が鍵です。一人で抱え込まず、全力で走り抜けましょう！",
+                text2: "情報が氾濫し、AIが瞬時に答えを提示する現代において、真の価値を持つのは「思考すること」そのものです。<br>Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、みんなが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。",
                 sch1: "50分5限＆面談開始(-14日)", sch2: "40分6限 (-13日)", sch3: "新入生歓迎会", sch4: "進路ガイダンス＆懇談会", sch5: "２・３年健康診断", sch6: "立会演説会 (40分7限)", sch7: "昭和の日 (祝)", sch8: "水曜日授業"
             },
             en: {
-                title1: "👋 Meet Nakacy",
-                profile: "<li><strong>Name:</strong> Kohei Nakashima (44)</li><li><strong>Family:</strong> Wife, a daughter, twin sons (Soccer boys!)</li><li><strong>Experience:</strong> 18 years</li><li><strong>Langs:</strong> JP, EN, ES, ID, NE, HI</li><li><strong>Tech:</strong> Microsoft Educator / Python, React App Dev</li><li><strong>Hobbies:</strong> Drones, Video Editing, DIY, Baseball</li><li><strong>Game:</strong> Resident Evil, Fortnite, Tetris</li><li><strong>Anime:</strong> Dragon Ball, Crayon Shin-chan</li>",
-                text1: "Working at a coffee shop in Vancouver taught me how language expands our world endlessly across borders. I also run an international exchange community called 'Global Classroom'.<br><br>I'm also a programmer! I create English learning apps like 'TalkGatcha' and 'PowerSlide', and even Metaverse spaces so you can learn while having fun.<br><br>I hope you enjoy English not just for test scores, but as the ultimate tool to expand your possibilities. Feel free to talk to me about anything from career advice to games and anime! Let's make it a great year!",
+                title1: "👋 Homeroom Teacher",
+                profile: `
+                    <li><strong>Name:</strong> Kohei Nakashima (44)</li>
+                    <li><strong>Experience:</strong> 18 years</li>
+                    <li><strong>Langs:</strong> JP, EN, ES, ID, NE</li>
+                    <li><strong>Cert:</strong> Microsoft Educator</li>
+                    <li><strong>Hobbies:</strong> DIY, App Development</li>
+                `,
+                text1: "Hi everyone! I'm 'Nakacy', and I joined Anjo Gakuen this April. Working at a coffee shop in Vancouver taught me how language expands our world across borders. I also run an international exchange community called 'Global Classroom'.<br><br>I hope Class 3-2 enjoys English not just for test scores, but as the ultimate tool to expand your possibilities. Feel free to talk to me anytime you want to challenge something or hit a wall. Let's make it the best class together for the next year!",
                 schedule_title: "📅 Weekly Class Schedule",
                 prom_title: "✨ Class 3-2: Five Promises",
                 prom_list: `
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">⏰</span>Be punctual & meet deadlines</div>
-                        <div class="promise-reason">This is the foundation of social trust and an act of respecting others' time.</div>
-                    </div>
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">🚀</span>Be a constant challenger</div>
-                        <div class="promise-reason">Status quo means decline. Growth always happens outside your comfort zone.</div>
-                    </div>
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">🌐</span>Understand the meaning of language</div>
-                        <div class="promise-reason">It's not just a skill, but a way to gain new perspectives and view the world.</div>
-                    </div>
-                    <div class="promise-card">
-                        <div class="promise-header"><span class="promise-icon">🤝</span>Show respect & use polite words</div>
-                        <div class="promise-reason">This builds the foundation for smooth communication and good relationships.</div>
-                    </div>
-                    <div class="promise-card" style="grid-column: 1 / -1;">
-                        <div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>Save yourself & friends with a smile</div>
-                        <div class="promise-reason" style="text-align: center;">A smile is a powerful tool that reduces your stress and gives comfort to others.</div>
-                    </div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">⏰</span>Be punctual & meet deadlines</div><div class="promise-reason">This is the foundation of social trust and respects others' time.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🚀</span>Be a constant challenger</div><div class="promise-reason">Status quo means decline. Growth is outside your comfort zone.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🌐</span>Understand why we learn languages</div><div class="promise-reason">It's not just a skill, but a way to gain new perspectives on the world.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🤝</span>Show respect & use polite words</div><div class="promise-reason">This builds the foundation for smooth communication and good relationships.</div></div>
+                    <div class="promise-card" style="grid-column: 1 / -1;"><div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>Save yourself & friends with a smile</div><div class="promise-reason" style="text-align: center;">A smile is a powerful tool that reduces your stress and gives comfort to others.</div></div>
                 `,
                 title2: "🧠 Why 'Deep Thinkers'?",
-                text2: "In today's world where AI provides instant answers, the true value lies in 'thinking' itself.<br>A Deep Thinker doesn't just swallow given knowledge, but asks questions and derives logical answers. I hope you grow into 'independent' individuals who stand on your own feet and think with your own heads. Think deeply and act. That is the only way to carve out your future.",
-                title3: "🤝 Respect & Future",
-                text3: "Embrace differences and have a flexible mind to respect others. Early preparation is the key to your future career. Let's sprint together without carrying the burden alone!",
+                text2: "In today's world where AI provides instant answers, the true value lies in 'thinking' itself.<br>A Deep Thinker doesn't just swallow given knowledge, but asks questions and derives logical answers. I hope you all grow into 'independent' individuals who stand on your own feet and think with your own heads. Think deeply and act. That is the only way to carve out your future.",
                 sch1: "50m x5 & Interviews", sch2: "40m x6 (-13th)", sch3: "Welcome Party", sch4: "Career Guidance", sch5: "Health Checkup", sch6: "Speech (40m 7th)", sch7: "Showa Day", sch8: "Wed. Classes"
             },
-            pt: { title1: "👋 Professor", text1: "[Tradução em Português disponível em breve... Por favor, selecione English ou 日本語]", text2: "...", text3: "..." },
-            tl: { title1: "👋 Guro", text1: "[Tagalog translation coming soon... Please select English or 日本語]", text2: "...", text3: "..." },
-            ta: { title1: "👋 ஆசிரியர்", text1: "[Tamil translation coming soon... Please select English or 日本語]", text2: "...", text3: "..." },
-            zh: { title1: "👋 班主任", text1: "[中文翻译即将推出... 请选择 English 或 日本語]", text2: "...", text3: "..." }
+            pt: {
+                title1: "👋 Professor",
+                profile: "<li><strong>Nome:</strong> Nakashima Kohei (44)</li><li><strong>Exp:</strong> 18 anos</li><li><strong>Idiomas:</strong> JP, EN, ES, ID, NE</li><li><strong>Cert:</strong> Microsoft Educator</li><li><strong>Hobbies:</strong> DIY, Desenvolvimento de Apps</li>",
+                text1: "Olá a todos! Sou 'Nakacy' e entrei na Anjo Gakuen em abril. Trabalhar em Vancouver me ensinou como o idioma expande nosso mundo. Também administro a comunidade 'Global Classroom'.<br><br>Espero que a Turma 3-2 aproveite o inglês como a melhor ferramenta para expandir suas possibilidades. Fiquem à vontade para falar comigo sempre. Vamos fazer desta a melhor turma juntos!",
+                schedule_title: "📅 Cronograma de Aulas",
+                prom_title: "✨ 5 Promessas da Turma 3-2",
+                prom_list: `
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">⏰</span>Seja pontual e cumpra prazos</div><div class="promise-reason">Base da confiança social e respeito ao tempo alheio.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🚀</span>Seja um desafiante constante</div><div class="promise-reason">Manter o status quo é declinar. O crescimento está fora da zona de conforto.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🌐</span>Entenda o porquê de aprender idiomas</div><div class="promise-reason">Não é apenas uma habilidade, mas uma nova perspectiva de mundo.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🤝</span>Mostre respeito e use palavras gentis</div><div class="promise-reason">A base para boa comunicação e bons relacionamentos.</div></div>
+                    <div class="promise-card" style="grid-column: 1 / -1;"><div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>Salve a si e aos amigos com um sorriso</div><div class="promise-reason" style="text-align: center;">Reduz o estresse e traz conforto a todos.</div></div>
+                `,
+                title2: "🧠 Por que 'Deep Thinkers'?",
+                text2: "Na era da IA, o verdadeiro valor está no 'pensar'.<br>Um Deep Thinker não aceita apenas o que lhe é dado, mas faz perguntas e busca respostas lógicas. Espero que vocês se tornem 'independentes', pensando com a própria cabeça. Pensem profundamente e ajam.",
+                sch1: "50m x5 & Entrevistas", sch2: "40m x6 (-13)", sch3: "Festa de Boas-Vindas", sch4: "Orientação de Carreira", sch5: "Exame Médico", sch6: "Discurso (40m)", sch7: "Dia de Showa", sch8: "Aulas de Quarta"
+            },
+            tl: {
+                title1: "👋 Guro",
+                profile: "<li><strong>Pangalan:</strong> Nakashima Kohei (44)</li><li><strong>Exp:</strong> 18 taon</li><li><strong>Wika:</strong> JP, EN, ES, ID, NE</li><li><strong>Cert:</strong> Microsoft Educator</li><li><strong>Hobbies:</strong> DIY, App Dev</li>",
+                text1: "Kamusta sa lahat! Ako si 'Nakacy' na sumali sa Anjo Gakuen nitong Abril. Ang pagtatrabaho sa Vancouver ay nagturo sa akin kung paano pinalalawak ng wika ang ating mundo.<br><br>Sana ay ma-enjoy ng Class 3-2 ang Ingles bilang tool para palawakin ang inyong mga posibilidad. Huwag mag-atubiling kausapin ako anumang oras. Gawin nating pinakamahusay na klase ito nang magkasama!",
+                schedule_title: "📅 Iskedyul ng Klase",
+                prom_title: "✨ 5 Pangako ng Class 3-2",
+                prom_list: `
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">⏰</span>Maging maagap sa oras at deadline</div><div class="promise-reason">Ito ang batayan ng tiwala at paggalang sa oras ng iba.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🚀</span>Laging subukan ang mga bagong hamon</div><div class="promise-reason">Ang paglago ay nasa labas ng comfort zone.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🌐</span>Unawain ang halaga ng pag-aaral ng wika</div><div class="promise-reason">Paraan ito upang makakuha ng bagong pananaw sa mundo.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🤝</span>Magpakita ng paggalang at magalang na salita</div><div class="promise-reason">Ito ang pundasyon ng mabuting relasyon.</div></div>
+                    <div class="promise-card" style="grid-column: 1 / -1;"><div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>Iligtas ang sarili at kaibigan gamit ang ngiti</div><div class="promise-reason" style="text-align: center;">Nakakabawas ito ng stress at nagbibigay ng ginhawa.</div></div>
+                `,
+                title2: "🧠 Bakit 'Deep Thinkers'?",
+                text2: "Sa panahon ng AI, ang tunay na halaga ay nasa pag-iisip.<br>Ang Deep Thinker ay nagtatanong at gumagawa ng sariling lohikal na sagot. Sana ay maging independyente kayo na nag-iisip para sa inyong sarili. Mag-isip nang malalim at kumilos.",
+                sch1: "50m x5 & Interviews", sch2: "40m x6 (-13)", sch3: "Welcome Party", sch4: "Career Guidance", sch5: "Health Check", sch6: "Speech (40m)", sch7: "Showa Day", sch8: "Wed. Classes"
+            },
+            ta: {
+                title1: "👋 ஆசிரியர்",
+                profile: "<li><strong>பெயர்:</strong> கோஹெய் நகாஷிமா (44)</li><li><strong>அனுபவம்:</strong> 18 ஆண்டுகள்</li><li><strong>மொழிகள்:</strong> JP, EN, ES, ID, NE</li><li><strong>சான்றிதழ்:</strong> Microsoft Educator</li><li><strong>பொழுதுபோக்கு:</strong> DIY, App Dev</li>",
+                text1: "அனைவருக்கும் வணக்கம்! நான் 'நகாசி'. கனடாவில் வேலை செய்தது மொழியின் வலிமையை எனக்கு உணர்த்தியது.<br><br>ஆங்கிலத்தை உங்கள் எதிர்காலத்திற்கான கருவியாக அனுபவிப்பீர்கள் என்று நம்புகிறேன். எப்போது வேண்டுமானாலும் என்னிடம் பேசலாம். நாம் இணைந்து சிறந்த வகுப்பை உருவாக்குவோம்!",
+                schedule_title: "📅 வகுப்பு அட்டவணை",
+                prom_title: "✨ வகுப்பு 3-2: 5 வாக்குறுதிகள்",
+                prom_list: `
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">⏰</span>நேரத்தை மதிக்கவும்</div><div class="promise-reason">இது சமூக நம்பிக்கையின் அடிப்படை.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🚀</span>சவால்களை எதிர்கொள்ளுங்கள்</div><div class="promise-reason">வளர்ச்சி உங்கள் சௌகரிய வட்டத்திற்கு வெளியே உள்ளது.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🌐</span>மொழி கற்பதன் அர்த்தத்தை உணர்க</div><div class="promise-reason">இது புதிய கண்ணோட்டங்களைப் பெற உதவும்.</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🤝</span>மரியாதை மற்றும் கனிவான வார்த்தைகள்</div><div class="promise-reason">நல்ல உறவுகளுக்கு இதுவே அடித்தளம்.</div></div>
+                    <div class="promise-card" style="grid-column: 1 / -1;"><div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>புன்னகையுடன் உதவுங்கள்</div><div class="promise-reason" style="text-align: center;">புன்னகை மன அழுத்தத்தைக் குறைக்கும்.</div></div>
+                `,
+                title2: "🧠 ஏன் 'Deep Thinkers'?",
+                text2: "AI காலத்தில், சிந்தனைக்கே உண்மையான மதிப்பு உள்ளது.<br>ஆழமாக சிந்திப்பவர்கள் தாங்களாகவே கேள்விகளை கேட்டு பதில்களைத் தேடுவார்கள். நீங்கள் சுயமாக சிந்திக்கும் திறன் கொண்டவர்களாக மாற வேண்டும்.",
+                sch1: "நேர்காணல்கள்", sch2: "வகுப்புகள்", sch3: "வரவேற்பு விழா", sch4: "வழிகாட்டல்", sch5: "மருத்துவ பரிசோதனை", sch6: "உரை", sch7: "ஷோவா தினம்", sch8: "புதன் வகுப்புகள்"
+            },
+            zh: {
+                title1: "👋 班主任",
+                profile: `
+                    <li><strong>姓名:</strong> 中岛 浩平 (44岁)</li>
+                    <li><strong>教龄:</strong> 18年</li>
+                    <li><strong>语言:</strong> 日语、英语、西语、印尼语、尼泊尔语</li>
+                    <li><strong>资格:</strong> Microsoft认证教师</li>
+                    <li><strong>爱好:</strong> DIY、App开发</li>
+                `,
+                text1: "大家好！我是今年4月来到安城学园的“Nakacy”。在温哥华工作的经历让我体会到语言开拓眼界的魅力。<br><br>我希望3年2组的大家能把英语作为拓展无限可能的最强工具来享受。遇到挑战或困难时，随时来找我聊聊吧。在接下来的一年里，让我们一起创造最棒的班级！",
+                schedule_title: "📅 每周课程表",
+                prom_title: "✨ 3年2组的5个约定",
+                prom_list: `
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">⏰</span>守时并按时交作业</div><div class="promise-reason">这是社会信任的基础，也是尊重他人时间的体现。</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🚀</span>不断挑战自我</div><div class="promise-reason">维持现状即是倒退，成长发生在舒适区之外。</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🌐</span>理解学习语言的意义</div><div class="promise-reason">不仅是一项技能，更是多角度认知世界的方式。</div></div>
+                    <div class="promise-card"><div class="promise-header"><span class="promise-icon">🤝</span>尊重他人，用语礼貌</div><div class="promise-reason">这是建立良好人际关系的基石。</div></div>
+                    <div class="promise-card" style="grid-column: 1 / -1;"><div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>用微笑拯救自己和朋友</div><div class="promise-reason" style="text-align: center;">微笑是减轻压力、给周围带来安全感的强大武器。</div></div>
+                `,
+                title2: "🧠 为什么叫“Deep Thinkers”？",
+                text2: "在AI瞬间给出答案的时代，真正有价值的是“思考”本身。<br>Deep Thinker不会全盘接受已有的知识，而是自己提出问题并推导出逻辑答案。我衷心希望大家这一年能成长为“独立”的人，用自己的双脚站立，用自己的头脑思考。",
+                sch1: "50分钟5节课&面谈开始", sch2: "40分钟6节课 (-13日)", sch3: "迎新会", sch4: "升学指导&恳谈会", sch5: "高二高三体检", sch6: "竞选演讲 (40分7节)", sch7: "昭和之日 (假日)", sch8: "周三课程"
+            }
         };
 
         function changeLanguage() {
@@ -402,17 +447,15 @@
             if(document.getElementById("sec1-title")) document.getElementById("sec1-title").innerHTML = t.title1;
             if(t.profile) document.getElementById("profile-details").innerHTML = t.profile;
             if(document.getElementById("sec1-text")) document.getElementById("sec1-text").innerHTML = t.text1;
-            if(document.getElementById("sec-schedule-title")) document.getElementById("sec-schedule-title").innerHTML = t.schedule_title || translations['ja'].schedule_title;
-            if(document.getElementById("sec-prom-title")) document.getElementById("sec-prom-title").innerHTML = t.prom_title || translations['ja'].prom_title;
+            if(document.getElementById("sec-schedule-title")) document.getElementById("sec-schedule-title").innerHTML = t.schedule_title;
+            if(document.getElementById("sec-prom-title")) document.getElementById("sec-prom-title").innerHTML = t.prom_title;
             
             if(t.prom_list && document.getElementById("promises-content")) {
                 document.getElementById("promises-content").innerHTML = t.prom_list;
             }
             
-            if(document.getElementById("sec2-title")) document.getElementById("sec2-title").innerHTML = t.title2 || translations['ja'].title2;
-            if(document.getElementById("sec2-text")) document.getElementById("sec2-text").innerHTML = t.text2 || translations['ja'].text2;
-            if(document.getElementById("sec3-title")) document.getElementById("sec3-title").innerHTML = t.title3 || translations['ja'].title3;
-            if(document.getElementById("sec3-text")) document.getElementById("sec3-text").innerHTML = t.text3 || translations['ja'].text3;
+            if(document.getElementById("sec2-title")) document.getElementById("sec2-title").innerHTML = t.title2;
+            if(document.getElementById("sec2-text")) document.getElementById("sec2-text").innerHTML = t.text2;
             
             for(let i=1; i<=8; i++) { 
                 if(document.getElementById(`sch${i}`) && t[`sch${i}`]) {
