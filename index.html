@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Deep Thinkers - Class 3-2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- 次世代Bento UI 基本設定 --- */
+        :root {
+            --bg-color: #f4f4f9; 
+            --card-bg: #ffffff;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            --accent-blue: #007aff;
+            --accent-gradient: linear-gradient(-45deg, #007aff, #5856d6, #00c6ff, #007aff);
+            --promise-bg: #fff9e6;
+            --radius: 20px; 
+            --gap: 15px; /* 余白を少し広げて見やすく */
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            /* 本文は読みやすいサンセリフ体 */
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 10px 10px 80px; 
+            line-height: 1.6; 
+            -webkit-print-color-adjust: exact; 
+        }
+
+        .container { max-width: 800px; margin: 0 auto; }
+
+        /* --- 言語切り替えボタン (右上固定) --- */
+        .top-right-lang {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 6px 15px;
+            border-radius: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 0.95rem;
+        }
+        .top-right-lang select {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+        }
+
+        /* --- Bento Grid レイアウト (PC用デフォルト2段組) --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--gap);
+            grid-auto-flow: dense;
+        }
+
+        .bento-item {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px; /* パディングを増やして見やすく */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 各セクションの配置 --- */
+        .header-item { 
+            grid-column: span 2; padding: 40px; background-image: var(--accent-gradient);
+            background-size: 400% 400%; animation: gradientAnimation 10s ease infinite;
+            color: white; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        @keyframes gradientAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .deep-item { grid-column: span 2; background-color: #1d1d1f; color: #f5f5f7; padding: 35px; } 
+        .intro-item { grid-column: span 1; }
+        .schedule-item { grid-column: span 1; background-color: #f8f8fb; }
+        .promises-item { grid-column: span 2; background-color: var(--promise-bg); border: 1px solid #ffeeba; }
+        .respect-future-item { grid-column: span 2; } 
+        .schedule-img-item { grid-column: span 2; padding: 0; overflow: hidden; border: 1px solid #e5e5ea;} 
+
+        /* --- タイポグラフィ (フォントサイズ引き上げ) --- */
+        /* タイトルは1行を維持しつつ、DとTを大きく */
+        h1.title { 
+            margin: 0; 
+            font-size: clamp(2rem, 10vw, 4.2em); 
+            font-weight: 800; 
+            letter-spacing: -0.04em; 
+            line-height: 1.0; 
+            white-space: nowrap; 
+            /* 見出しは知的なセリフ体 */
+            font-family: 'Playfair Display', serif;
+        } 
+        
+        /* タイトルの D と T を大きくする装飾 */
+        .drop-cap {
+            font-size: 1.4em; /* 1.4倍大きく */
+            font-weight: 800;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: -0.05em;
+            color: white;
+            /* 少し白い縁取りを入れて強調 */
+            -webkit-text-stroke: 1px rgba(255,255,255,0.6);
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .subtitle { font-size: 1.3em; font-weight: 600; opacity: 0.95; margin-top: 8px; font-family: 'Playfair Display', serif; }
+        
+        .meta-info { font-size: 0.9rem; opacity: 0.95; margin-top: 20px; display: flex; gap: 20px; font-weight: 600; }
+
+        /* セクション見出しはセリフ体 */
+        h2.bento-title { 
+            font-size: 1.3em; margin: 0 0 15px 0; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text-main); 
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .deep-item h2.bento-title { color: #fff; justify-content: center; font-size: clamp(1.2rem, 6vw, 1.6em); margin-bottom: 20px; white-space: nowrap;}
+        .schedule-img-item h2.bento-title { padding: 20px 25px; margin: 0; border-bottom: 1px solid #e5e5ea; justify-content: center;}
+        .promises-item h2.bento-title { justify-content: center; font-size: 1.6em; margin-bottom: 20px;}
+
+        /* 本文のフォントサイズ引き上げ */
+        .bento-text { font-size: 0.95rem; margin: 0; opacity: 0.95; text-align: justify; }
+        /* 想いの文章は左寄せで読みやすく */
+        .deep-item .bento-text { text-align: left; font-size: 1rem; max-width: 680px; margin: 0 auto; line-height: 1.8;}
+
+        /* --- 担任紹介 (見出しのみセリフ体) --- */
+        .profile-box { background-color: rgba(0, 122, 255, 0.05); border-radius: 12px; padding: 12px; margin-bottom: 15px; border-left: 4px solid var(--accent-blue); }
+        .profile-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; }
+        .profile-list li { margin-bottom: 5px; }
+        .profile-list strong { color: var(--accent-blue); display: inline-block; width: 70px; font-family: 'Playfair Display', serif; font-weight: 700;}
+        
+        /* 担任紹介のテキストフォントをNoto Sansに変更し、サイズを大きく */
+        .stylish-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+            color: #333;
+        }
+
+        /* --- 時間割画像 --- */
+        .schedule-img { width: 100%; height: auto; display: block; object-fit: cover; }
+
+        /* --- 5つの約束 (見出しのみセリフ体) --- */
+        .promises-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .promise-card { background: white; border-radius: 15px; padding: 18px; border: 1px solid #eee; display: flex; flex-direction: column; gap: 6px;}
+        .promise-header { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; color: #856404; font-family: 'Playfair Display', serif; }
+        .promise-icon { font-size: 1.3em; }
+        /* 約束の理由テキストをNoto Sansに変更し、サイズを大きく */
+        .promise-reason { font-size: 0.85rem; color: #6c757d; font-weight: 400; line-height: 1.5; text-align: justify; font-family: 'Noto Sans JP', sans-serif;}
+
+        /* --- スケジュール & 面談フォーム --- */
+        .schedule-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; } 
+        .schedule-list li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #e5e5ea; }
+        .schedule-list li:last-child { border-bottom: none; }
+        .schedule-date { font-weight: 700; color: var(--accent-blue); white-space: nowrap; margin-right: 8px;}
+
+        /* フォームの強調 (さらに大きく) */
+        .form-link-container { margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(255, 59, 48, 0.06); padding: 15px; border-radius: 15px; border: 2px dashed #ff3b30;}
+        .blink-alert { color: #ff3b30; font-weight: 800; font-size: 1rem; animation: blinker 1.2s linear infinite; font-family: 'Playfair Display', serif;}
+        @keyframes blinker { 50% { opacity: 0; } }
+        .form-action { display: flex; align-items: center; gap: 12px; }
+        .form-text { font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
+        .form-icon-btn { font-size: 3em; text-decoration: none; cursor: pointer; transition: transform 0.2s; display: inline-block; filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));}
+        .form-icon-btn:hover { transform: scale(1.1); }
+
+        /* --- 下部フローティングナビ (印刷ボタン) --- */
+        .floating-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 8px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: flex; gap: 20px; z-index: 1000; border: 1px solid rgba(0,0,0,0.05); }
+        .nav-btn { background: none; border: none; font-size: 22px; cursor: pointer; position: relative; padding: 5px; color: var(--accent-blue); font-weight: 700; font-family: 'Playfair Display', serif;}
+
+        /* --- スマホ用レイアウト最適化 (1段組に強制) --- */
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; gap: var(--gap); }
+            .header-item, .deep-item, .schedule-img-item, .promises-item, .respect-future-item, .intro-item, .schedule-item { grid-column: span 1; padding: 20px; }
+            .header-item { padding: 30px 20px; }
+            .deep-item { padding: 25px 20px; }
+            .schedule-img-item { padding: 0; }
+            .meta-info { flex-direction: column; gap: 4px; align-items: center; margin-top: 15px; font-size: 0.85rem;}
+            .promises-grid { grid-template-columns: 1fr; }
+            .promises-item h2.bento-title { font-size: 1.2em; white-space: nowrap; }
+            .deep-item .bento-text { font-size: 0.95rem; }
+        }
+
+        /* --- A4印刷最適化 --- */
+        @media print {
+            @page { size: A4 portrait; margin: 8mm; } 
+            body { background: white; padding: 0; }
+            .container { max-width: 100%; }
+            .bento-grid { gap: 10px; display: grid; grid-template-columns: repeat(2, 1fr); } 
+            .bento-item { border: 1px solid #eee; box-shadow: none; padding: 18px; break-inside: avoid; }
+            .header-item { animation: none; background: var(--accent-blue); padding: 25px; }
+            .floating-nav, .top-right-lang, .no-print { display: none !important; }
+            .deep-item { color: black; background-color: #f2f2f7; border: 1px solid #ccc; padding: 20px;}
+            .deep-item h2.bento-title { color: black; }
+            h1.title { font-size: 3em; }
+            .meta-info { font-size: 0.8rem; margin-top: 10px; }
+            .stylish-text { font-size: 0.9rem; }
+            .bento-text { font-size: 0.85rem; }
+            .promise-reason { font-size: 0.8rem; }
+            .schedule-img { max-height: 250px; object-fit: contain; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-right-lang no-print">
+        🌐 Language
+        <select id="langSwitch" onchange="changeLanguage()">
+            <option value="ja">日本語</option><option value="en">English</option><option value="pt">Português</option>
+            <option value="tl">Tagalog</option><option value="ta">Tamil</option><option value="zh">中文</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div class="bento-grid">
+            
+            <header class="bento-item header-item">
+                <div class="header-left">
+                    <h1 class="title"><span class="drop-cap">D</span>eep <span class="drop-cap">T</span>hinkers</h1>
+                    <div class="subtitle">Class 3-2 Newsletter</div>
+                </div>
+                <div class="meta-info no-print">
+                    <span>📅 Publish: April 8, 2026</span>
+                    <span>✍️ Writer: Kohei Nakashima</span>
+                </div>
+            </header>
+
+            <div class="bento-item deep-item">
+                <h2 class="bento-title" id="sec2-title">🧠 「Deep Thinkers」に込めた想い</h2>
+                <p class="bento-text" id="sec2-text">
+                    情報が氾濫し、AIが瞬時に答えを提示する現代において、真の価値を持つのは「思考すること」そのものです。<br>
+                    Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、皆さんが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。
+                </p>
+            </div>
+
+            <div class="bento-item intro-item">
+                <h2 class="bento-title" id="sec1-title">👋 Homeroom Teacher</h2>
+                <div class="profile-box">
+                    <ul class="profile-list" id="profile-details">
+                        <li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li>
+                        <li><strong>家族:</strong>妻、長女、双子の息子</li>
+                        <li><strong>教員歴:</strong>18年 </li>
+                        <li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語</li>
+                        <li><strong>Tech:</strong>Microsoft認定教員 / Python, ReactでのWebアプリ開発</li>
+                        <li><strong>趣味:</strong>ドローン撮影、動画編集、DIY</li>
+                    </ul>
+                </div>
+                <p class="stylish-text" id="sec1-text">
+                    カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>
+                
+                    3年2組のみんなにも、英語を「テストの点数のため」だけではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、あるいはゲームやアニメの話がしたいときでも、いつでも気軽に話しかけてくださいね。1年間、一緒に最高のクラスを創っていきましょう！
+                </p>
+            </div>
+
+            <div class="bento-item schedule-item">
+                <h2 class="bento-title" id="sec5-title">🗓️ Upcoming Events</h2>
+                <ul class="schedule-list">
+                    <li><span class="schedule-date">4/8(水)</span> <span id="sch1">50分5限＆面談開始(-14日)</span></li>
+                    <li><span class="schedule-date">4/9(木)</span> <span id="sch2">40分6限 (-13日)</span></li>
+                    <li><span class="schedule-date">4/10(金)</span> <span id="sch3">新入生歓迎会</span></li>
+                    <li><span class="schedule-date">4/18(土)</span> <span id="sch4">進路ガイダンス＆懇談会</span></li>
+                    <li><span class="schedule-date">4/21(火)</span> <span id="sch5">２・３年健康診断</span></li>
+                    <li><span class="schedule-date">4/22(水)</span> <span id="sch6">立会演説会 (40分7限)</span></li>
+                    <li><span class="schedule-date">4/29(水)</span> <span id="sch7">昭和の日 (祝)</span></li>
+                    <li><span class="schedule-date">5/1(金)</span> <span id="sch8">水曜日授業</span></li>
+                </ul>
+                <div class="form-link-container no-print">
+                    <span class="blink-alert">🚨 Have you done this? 🚨</span>
+                    <div class="form-action">
+                        <span class="form-text">事前面談フォーム入力 ➡️</span>
+                        <a href="https://forms.gle/REAvdrHYYJtHnnFK7" target="_blank" class="form-icon-btn" title="面談フォームを開く">📅</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-item promises-item">
+                <h2 class="bento-title" id="sec-prom-title">✨ Class 3-2: Five Promises</h2>
+                <div class="promises-grid" id="promises-content">
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">⏰</span>時間を守り、提出物は期日厳守</div>
+                        <div class="promise-reason">社会的信頼の基礎であり、他者の時間を尊重する行為です。</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🚀</span>常に挑戦し続ける人になる</div>
+                        <div class="promise-reason">現状維持は衰退を意味します。成長はコンフォートゾーンの外にあります。</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🌐</span>言語を学ぶ意味を理解し卒業する</div>
+                        <div class="promise-reason">単なるスキルではなく、異なる視点を得て世界を多角的に捉えるためです。</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🤝</span>誰に対しても敬意と丁寧な言葉を</div>
+                        <div class="promise-reason">円滑なコミュニケーションと良好な人間関係を築く土台となります。</div>
+                    </div>
+                    <div class="promise-card" style="grid-column: 1 / -1;">
+                        <div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>笑顔で自分と友達を救う</div>
+                        <div class="promise-reason" style="text-align: center;">笑顔は自身のストレスを軽減し、周囲に安心感を与える強力なツールです。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-item respect-future-item">
+                <h2 class="bento-title" id="sec3-title">🤝 Respect & Future</h2>
+                <p class="bento-text" id="sec3-text">
+                    違いを面白がり、他者をリスペクトできる柔軟な心を持ってください。また、進路実現は早期準備が鍵です。一人で抱え込まず、全力で走り抜けましょう！
+                </p>
+            </div>
+
+            <div class="bento-item schedule-img-item">
+                <h2 class="bento-title" id="sec-schedule-title">📅 Weekly Class Schedule</h2>
+                <img src="image1.webp" alt="Weekly Class Schedule" class="schedule-img">
+            </div>
+
+        </div>
+    </div>
+
+    <nav class="floating-nav no-print">
+        <button class="nav-btn" onclick="window.print()" title="PDFで保存・印刷">🖨️ A4 Print</button>
+    </nav>
+
+    <script>
+        const translations = {
+            ja: {
+                title1: "👋 Homeroom Teacher",
+                profile: "<li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li><li><strong>家族:</strong>妻、長女、双子の息子</li><li><strong>教員歴:</strong>18年 </li><li><strong>言語:</strong>日・英・インドネシア・ネパール</li><li><strong>Tech:</strong>Microsoft認定教員 / アプリ開発</li><li><strong>趣味:</strong>ドローン、動画編集、DIY、高校野球観戦、ゲーム、アニメ</li>",
+                text1: "カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、オンライン国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>また、私のもう一つの顔は「プログラマー」です！皆さんが楽しく学べるように、「TalkGatcha」や「PowerSlide」などの英語学習Webアプリや、メタバース空間まで自分で作っています。<br><br>3年2組の皆さんにも、英語を「自分の可能性を広げる最強のツール」として楽しんでほしいです。進路の悩みからゲームの話まで、何でも気軽に話しかけてくださいね。1年間、よろしく！",
+                schedule_title: "📅 Weekly Class Schedule",
+                prom_title: "✨ Class 3-2: Five Promises",
+                title2: "🧠 「Deep Thinkers」に込めた想い",
+                text2: "情報が氾濫し、AIが瞬時に答えを提示する現代において、真の価値を持つのは「思考すること」そのものです。<br>Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、皆さんが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。",
+                title3: "🤝 Respect & Future",
+                text3: "違いを面白がり、他者をリスペクトできる柔軟な心を持ってください。また、進路実現は早期準備が鍵です。一人で抱え込まず、全力で走り抜けましょう！",
+                sch1: "50分5限＆面談開始(-14日)", sch2: "40分6限 (-13日)", sch3: "新入生歓迎会", sch4: "進路ガイダンス＆懇談会", sch5: "２・３年健康診断", sch6: "立会演説会 (40分7限)", sch7: "昭和の日 (祝)", sch8: "水曜日授業"
+            },
+            // ... 他言語は最小限に維持
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById("langSwitch").value;
+            const t = translations[lang] || translations['ja'];
+            document.getElementById("sec1-title").innerHTML = t.title1;
+            document.getElementById("profile-details").innerHTML = t.profile;
+            document.getElementById("sec1-text").innerHTML = t.text1;
+            document.getElementById("sec-schedule-title").innerHTML = t.schedule_title;
+            document.getElementById("sec-prom-title").innerHTML = t.prom_title;
+            document.getElementById("sec2-title").innerHTML = t.title2;
+            document.getElementById("sec2-text").innerHTML = t.text2;
+            document.getElementById("sec3-title").innerHTML = t.title3;
+            document.getElementById("sec3-text").innerHTML = t.text3;
+            for(let i=1; i<=8; i++) { if(document.getElementById(`sch${i}`)) document.getElementById(`sch${i}`).innerHTML = t[`sch${i}`]; }
+        }
+    </script>
+</body>
+</html>
