@@ -18,12 +18,11 @@
             --accent-gradient: linear-gradient(-45deg, #007aff, #5856d6, #00c6ff, #007aff);
             --promise-bg: #fff9e6;
             --radius: 20px; 
-            --gap: 15px; /* 余白を少し広げて見やすく */
+            --gap: 15px;
         }
 
         * { box-sizing: border-box; }
         body {
-            /* 本文は読みやすいサンセリフ体 */
             font-family: 'Noto Sans JP', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -68,7 +67,7 @@
         .bento-item {
             background-color: var(--card-bg);
             border-radius: var(--radius);
-            padding: 25px; /* パディングを増やして見やすく */
+            padding: 25px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
@@ -89,8 +88,7 @@
         .respect-future-item { grid-column: span 2; } 
         .schedule-img-item { grid-column: span 2; padding: 0; overflow: hidden; border: 1px solid #e5e5ea;} 
 
-        /* --- タイポグラフィ (フォントサイズ引き上げ) --- */
-        /* タイトルは1行を維持しつつ、DとTを大きく */
+        /* --- タイポグラフィ --- */
         h1.title { 
             margin: 0; 
             font-size: clamp(2rem, 10vw, 4.2em); 
@@ -98,28 +96,23 @@
             letter-spacing: -0.04em; 
             line-height: 1.0; 
             white-space: nowrap; 
-            /* 見出しは知的なセリフ体 */
             font-family: 'Playfair Display', serif;
         } 
         
-        /* タイトルの D と T を大きくする装飾 */
         .drop-cap {
-            font-size: 1.4em; /* 1.4倍大きく */
+            font-size: 1.4em; 
             font-weight: 800;
             display: inline-block;
             vertical-align: middle;
             margin-right: -0.05em;
             color: white;
-            /* 少し白い縁取りを入れて強調 */
             -webkit-text-stroke: 1px rgba(255,255,255,0.6);
             text-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .subtitle { font-size: 1.3em; font-weight: 600; opacity: 0.95; margin-top: 8px; font-family: 'Playfair Display', serif; }
-        
         .meta-info { font-size: 0.9rem; opacity: 0.95; margin-top: 20px; display: flex; gap: 20px; font-weight: 600; }
 
-        /* セクション見出しはセリフ体 */
         h2.bento-title { 
             font-size: 1.3em; margin: 0 0 15px 0; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text-main); 
             font-family: 'Playfair Display', serif;
@@ -129,18 +122,15 @@
         .schedule-img-item h2.bento-title { padding: 20px 25px; margin: 0; border-bottom: 1px solid #e5e5ea; justify-content: center;}
         .promises-item h2.bento-title { justify-content: center; font-size: 1.6em; margin-bottom: 20px;}
 
-        /* 本文のフォントサイズ引き上げ */
         .bento-text { font-size: 0.95rem; margin: 0; opacity: 0.95; text-align: justify; }
-        /* 想いの文章は左寄せで読みやすく */
         .deep-item .bento-text { text-align: left; font-size: 1rem; max-width: 680px; margin: 0 auto; line-height: 1.8;}
 
-        /* --- 担任紹介 (見出しのみセリフ体) --- */
+        /* --- 担任紹介 --- */
         .profile-box { background-color: rgba(0, 122, 255, 0.05); border-radius: 12px; padding: 12px; margin-bottom: 15px; border-left: 4px solid var(--accent-blue); }
         .profile-list { list-style: none; padding: 0; margin: 0; font-size: 0.9rem; }
         .profile-list li { margin-bottom: 5px; }
         .profile-list strong { color: var(--accent-blue); display: inline-block; width: 70px; font-family: 'Playfair Display', serif; font-weight: 700;}
         
-        /* 担任紹介のテキストフォントをNoto Sansに変更し、サイズを大きく */
         .stylish-text {
             font-family: 'Noto Sans JP', sans-serif;
             font-size: 1rem;
@@ -152,12 +142,11 @@
         /* --- 時間割画像 --- */
         .schedule-img { width: 100%; height: auto; display: block; object-fit: cover; }
 
-        /* --- 5つの約束 (見出しのみセリフ体) --- */
+        /* --- 5つの約束 --- */
         .promises-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .promise-card { background: white; border-radius: 15px; padding: 18px; border: 1px solid #eee; display: flex; flex-direction: column; gap: 6px;}
         .promise-header { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; color: #856404; font-family: 'Playfair Display', serif; }
         .promise-icon { font-size: 1.3em; }
-        /* 約束の理由テキストをNoto Sansに変更し、サイズを大きく */
         .promise-reason { font-size: 0.85rem; color: #6c757d; font-weight: 400; line-height: 1.5; text-align: justify; font-family: 'Noto Sans JP', sans-serif;}
 
         /* --- スケジュール & 面談フォーム --- */
@@ -166,7 +155,6 @@
         .schedule-list li:last-child { border-bottom: none; }
         .schedule-date { font-weight: 700; color: var(--accent-blue); white-space: nowrap; margin-right: 8px;}
 
-        /* フォームの強調 (さらに大きく) */
         .form-link-container { margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(255, 59, 48, 0.06); padding: 15px; border-radius: 15px; border: 2px dashed #ff3b30;}
         .blink-alert { color: #ff3b30; font-weight: 800; font-size: 1rem; animation: blinker 1.2s linear infinite; font-family: 'Playfair Display', serif;}
         @keyframes blinker { 50% { opacity: 0; } }
@@ -179,7 +167,7 @@
         .floating-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 8px 25px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: flex; gap: 20px; z-index: 1000; border: 1px solid rgba(0,0,0,0.05); }
         .nav-btn { background: none; border: none; font-size: 22px; cursor: pointer; position: relative; padding: 5px; color: var(--accent-blue); font-weight: 700; font-family: 'Playfair Display', serif;}
 
-        /* --- スマホ用レイアウト最適化 (1段組に強制) --- */
+        /* --- スマホ用レイアウト最適化 --- */
         @media (max-width: 768px) {
             .bento-grid { grid-template-columns: 1fr; gap: var(--gap); }
             .header-item, .deep-item, .schedule-img-item, .promises-item, .respect-future-item, .intro-item, .schedule-item { grid-column: span 1; padding: 20px; }
@@ -249,17 +237,19 @@
                 <div class="profile-box">
                     <ul class="profile-list" id="profile-details">
                         <li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li>
-                        <li><strong>家族:</strong>妻、長女、双子の息子</li>
-                        <li><strong>教員歴:</strong>18年 </li>
-                        <li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語</li>
+                        <li><strong>家族:</strong>妻、長女、双子の息子(安城モンキーズでサッカー奮闘中！)</li>
+                        <li><strong>教員歴:</strong>18年 (愛知県教育委員会等を経て今年から安城学園へ)</li>
+                        <li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語・ヒンディー語</li>
                         <li><strong>Tech:</strong>Microsoft認定教員 / Python, ReactでのWebアプリ開発</li>
-                        <li><strong>趣味:</strong>ドローン撮影、動画編集、DIY</li>
+                        <li><strong>趣味:</strong>ドローン撮影、動画編集(Filmora)、DIY、高校野球観戦</li>
+                        <li><strong>Game:</strong>バイオハザード、フォートナイト、テトリス</li>
+                        <li><strong>Anime:</strong>ドラゴンボール、クレヨンしんちゃん</li>
                     </ul>
                 </div>
                 <p class="stylish-text" id="sec1-text">
-                    カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>
-                
-                    3年2組のみんなにも、英語を「テストの点数のため」だけではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、あるいはゲームやアニメの話がしたいときでも、いつでも気軽に話しかけてくださいね。1年間、一緒に最高のクラスを創っていきましょう！
+                    皆さん、初めまして！この4月から安城学園にやってきた「ナカシー」です。昔、カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>
+                    また、私のもう一つの顔は「プログラマー」です！皆さんが楽しく学べるように、「TalkGatcha」や「PowerSlide」などの英語学習Webアプリや、メタバース空間まで自分でプログラミングして作っています。<br><br>
+                    3年2組の皆さんにも、英語を「テストの点数のため」ではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、あるいはゲームやアニメの話がしたいときでも、いつでも気軽に話しかけてくださいね。1年間、一緒に最高のクラスを創っていきましょう！
                 </p>
             </div>
 
@@ -333,32 +323,102 @@
         const translations = {
             ja: {
                 title1: "👋 Homeroom Teacher",
-                profile: "<li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li><li><strong>家族:</strong>妻、長女、双子の息子</li><li><strong>教員歴:</strong>18年 </li><li><strong>言語:</strong>日・英・インドネシア・ネパール</li><li><strong>Tech:</strong>Microsoft認定教員 / アプリ開発</li><li><strong>趣味:</strong>ドローン、動画編集、DIY、高校野球観戦、ゲーム、アニメ</li>",
-                text1: "カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、オンライン国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>また、私のもう一つの顔は「プログラマー」です！皆さんが楽しく学べるように、「TalkGatcha」や「PowerSlide」などの英語学習Webアプリや、メタバース空間まで自分で作っています。<br><br>3年2組の皆さんにも、英語を「自分の可能性を広げる最強のツール」として楽しんでほしいです。進路の悩みからゲームの話まで、何でも気軽に話しかけてくださいね。1年間、よろしく！",
+                profile: "<li><strong>氏名:</strong>中島 浩平 (Nakashima Kohei) 44歳</li><li><strong>家族:</strong>妻、長女、双子の息子(安城モンキーズでサッカー奮闘中！)</li><li><strong>教員歴:</strong>18年 (愛知県教育委員会等を経て今年から安城学園へ)</li><li><strong>言語:</strong>日本語・英語・スペイン語・インドネシア語・ネパール語・ヒンディー語</li><li><strong>Tech:</strong>Microsoft認定教員 / Python, ReactでのWebアプリ開発</li><li><strong>趣味:</strong>ドローン撮影、動画編集(Filmora)、DIY、高校野球観戦</li><li><strong>Game:</strong>バイオハザード、フォートナイト、テトリス</li><li><strong>Anime:</strong>ドラゴンボール、クレヨンしんちゃん</li>",
+                text1: "皆さん、初めまして！この4月から安城学園にやってきた「ナカシー」です。昔、カナダのバンクーバーのコーヒーショップで働いていたとき、「言葉が通じるだけで、自分の世界が国境を越えてどこまでも広がる面白さ」を肌で感じました。その経験から、国際交流コミュニティ「Global Classroom」の運営も行っています。<br><br>また、私のもう一つの顔は「プログラマー」です！皆さんが楽しく学べるように、「TalkGatcha」や「PowerSlide」などの英語学習Webアプリや、メタバース空間まで自分でプログラミングして作っています。<br><br>3年2組の皆さんにも、英語を「テストの点数のため」ではなく、「自分の世界と可能性を広げる最強のツール」として楽しんでほしいと願っています。何かに挑戦したいとき、壁にぶつかるとき、あるいはゲームやアニメの話がしたいときでも、いつでも気軽に話しかけてくださいね。1年間、一緒に最高のクラスを創っていきましょう！",
                 schedule_title: "📅 Weekly Class Schedule",
                 prom_title: "✨ Class 3-2: Five Promises",
+                prom_list: `
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">⏰</span>時間を守り、提出物は期日厳守</div>
+                        <div class="promise-reason">社会的信頼の基礎であり、他者の時間を尊重する行為です。</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🚀</span>常に挑戦し続ける人になる</div>
+                        <div class="promise-reason">現状維持は衰退を意味します。成長はコンフォートゾーンの外にあります。</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🌐</span>言語を学ぶ意味を理解し卒業する</div>
+                        <div class="promise-reason">単なるスキルではなく、異なる視点を得て世界を多角的に捉えるためです。</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🤝</span>誰に対しても敬意と丁寧な言葉を</div>
+                        <div class="promise-reason">円滑なコミュニケーションと良好な人間関係を築く土台となります。</div>
+                    </div>
+                    <div class="promise-card" style="grid-column: 1 / -1;">
+                        <div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>笑顔で自分と友達を救う</div>
+                        <div class="promise-reason" style="text-align: center;">笑顔は自身のストレスを軽減し、周囲に安心感を与える強力なツールです。</div>
+                    </div>
+                `,
                 title2: "🧠 「Deep Thinkers」に込めた想い",
                 text2: "情報が氾濫し、AIが瞬時に答えを提示する現代において、真の価値を持つのは「思考すること」そのものです。<br>Deep Thinkerとは、与えられた知識をただ鵜呑みにするのではなく、自ら問いを立て、論理的に答えを導き出す人のこと。この一年、皆さんが自らの足で立ち、自らの頭で考え抜く「自立」した存在へと成長することを心から願っています。深く考え、行動する。それが未来を切り拓く唯一の道です。",
                 title3: "🤝 Respect & Future",
                 text3: "違いを面白がり、他者をリスペクトできる柔軟な心を持ってください。また、進路実現は早期準備が鍵です。一人で抱え込まず、全力で走り抜けましょう！",
                 sch1: "50分5限＆面談開始(-14日)", sch2: "40分6限 (-13日)", sch3: "新入生歓迎会", sch4: "進路ガイダンス＆懇談会", sch5: "２・３年健康診断", sch6: "立会演説会 (40分7限)", sch7: "昭和の日 (祝)", sch8: "水曜日授業"
             },
-            // ... 他言語は最小限に維持
+            en: {
+                title1: "👋 Meet Nakacy",
+                profile: "<li><strong>Name:</strong> Kohei Nakashima (44)</li><li><strong>Family:</strong> Wife, a daughter, twin sons (Soccer boys!)</li><li><strong>Experience:</strong> 18 years</li><li><strong>Langs:</strong> JP, EN, ES, ID, NE, HI</li><li><strong>Tech:</strong> Microsoft Educator / Python, React App Dev</li><li><strong>Hobbies:</strong> Drones, Video Editing, DIY, Baseball</li><li><strong>Game:</strong> Resident Evil, Fortnite, Tetris</li><li><strong>Anime:</strong> Dragon Ball, Crayon Shin-chan</li>",
+                text1: "Working at a coffee shop in Vancouver taught me how language expands our world endlessly across borders. I also run an international exchange community called 'Global Classroom'.<br><br>I'm also a programmer! I create English learning apps like 'TalkGatcha' and 'PowerSlide', and even Metaverse spaces so you can learn while having fun.<br><br>I hope you enjoy English not just for test scores, but as the ultimate tool to expand your possibilities. Feel free to talk to me about anything from career advice to games and anime! Let's make it a great year!",
+                schedule_title: "📅 Weekly Class Schedule",
+                prom_title: "✨ Class 3-2: Five Promises",
+                prom_list: `
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">⏰</span>Be punctual & meet deadlines</div>
+                        <div class="promise-reason">This is the foundation of social trust and an act of respecting others' time.</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🚀</span>Be a constant challenger</div>
+                        <div class="promise-reason">Status quo means decline. Growth always happens outside your comfort zone.</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🌐</span>Understand the meaning of language</div>
+                        <div class="promise-reason">It's not just a skill, but a way to gain new perspectives and view the world.</div>
+                    </div>
+                    <div class="promise-card">
+                        <div class="promise-header"><span class="promise-icon">🤝</span>Show respect & use polite words</div>
+                        <div class="promise-reason">This builds the foundation for smooth communication and good relationships.</div>
+                    </div>
+                    <div class="promise-card" style="grid-column: 1 / -1;">
+                        <div class="promise-header" style="justify-content: center;"><span class="promise-icon">😊</span>Save yourself & friends with a smile</div>
+                        <div class="promise-reason" style="text-align: center;">A smile is a powerful tool that reduces your stress and gives comfort to others.</div>
+                    </div>
+                `,
+                title2: "🧠 Why 'Deep Thinkers'?",
+                text2: "In today's world where AI provides instant answers, the true value lies in 'thinking' itself.<br>A Deep Thinker doesn't just swallow given knowledge, but asks questions and derives logical answers. I hope you grow into 'independent' individuals who stand on your own feet and think with your own heads. Think deeply and act. That is the only way to carve out your future.",
+                title3: "🤝 Respect & Future",
+                text3: "Embrace differences and have a flexible mind to respect others. Early preparation is the key to your future career. Let's sprint together without carrying the burden alone!",
+                sch1: "50m x5 & Interviews", sch2: "40m x6 (-13th)", sch3: "Welcome Party", sch4: "Career Guidance", sch5: "Health Checkup", sch6: "Speech (40m 7th)", sch7: "Showa Day", sch8: "Wed. Classes"
+            },
+            pt: { title1: "👋 Professor", text1: "[Tradução em Português disponível em breve... Por favor, selecione English ou 日本語]", text2: "...", text3: "..." },
+            tl: { title1: "👋 Guro", text1: "[Tagalog translation coming soon... Please select English or 日本語]", text2: "...", text3: "..." },
+            ta: { title1: "👋 ஆசிரியர்", text1: "[Tamil translation coming soon... Please select English or 日本語]", text2: "...", text3: "..." },
+            zh: { title1: "👋 班主任", text1: "[中文翻译即将推出... 请选择 English 或 日本語]", text2: "...", text3: "..." }
         };
 
         function changeLanguage() {
             const lang = document.getElementById("langSwitch").value;
             const t = translations[lang] || translations['ja'];
-            document.getElementById("sec1-title").innerHTML = t.title1;
-            document.getElementById("profile-details").innerHTML = t.profile;
-            document.getElementById("sec1-text").innerHTML = t.text1;
-            document.getElementById("sec-schedule-title").innerHTML = t.schedule_title;
-            document.getElementById("sec-prom-title").innerHTML = t.prom_title;
-            document.getElementById("sec2-title").innerHTML = t.title2;
-            document.getElementById("sec2-text").innerHTML = t.text2;
-            document.getElementById("sec3-title").innerHTML = t.title3;
-            document.getElementById("sec3-text").innerHTML = t.text3;
-            for(let i=1; i<=8; i++) { if(document.getElementById(`sch${i}`)) document.getElementById(`sch${i}`).innerHTML = t[`sch${i}`]; }
+            
+            if(document.getElementById("sec1-title")) document.getElementById("sec1-title").innerHTML = t.title1;
+            if(t.profile) document.getElementById("profile-details").innerHTML = t.profile;
+            if(document.getElementById("sec1-text")) document.getElementById("sec1-text").innerHTML = t.text1;
+            if(document.getElementById("sec-schedule-title")) document.getElementById("sec-schedule-title").innerHTML = t.schedule_title || translations['ja'].schedule_title;
+            if(document.getElementById("sec-prom-title")) document.getElementById("sec-prom-title").innerHTML = t.prom_title || translations['ja'].prom_title;
+            
+            if(t.prom_list && document.getElementById("promises-content")) {
+                document.getElementById("promises-content").innerHTML = t.prom_list;
+            }
+            
+            if(document.getElementById("sec2-title")) document.getElementById("sec2-title").innerHTML = t.title2 || translations['ja'].title2;
+            if(document.getElementById("sec2-text")) document.getElementById("sec2-text").innerHTML = t.text2 || translations['ja'].text2;
+            if(document.getElementById("sec3-title")) document.getElementById("sec3-title").innerHTML = t.title3 || translations['ja'].title3;
+            if(document.getElementById("sec3-text")) document.getElementById("sec3-text").innerHTML = t.text3 || translations['ja'].text3;
+            
+            for(let i=1; i<=8; i++) { 
+                if(document.getElementById(`sch${i}`) && t[`sch${i}`]) {
+                    document.getElementById(`sch${i}`).innerHTML = t[`sch${i}`]; 
+                }
+            }
         }
     </script>
 </body>
